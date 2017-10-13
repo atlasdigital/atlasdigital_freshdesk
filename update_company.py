@@ -19,10 +19,7 @@ def getTickets (user_email,pswd,tickets_url,headers):
     r = requests.get(tickets_url, auth=(user_email,pswd), headers=headers)
     #print(r.json())
     for tickets in r.json():
-        for attribute, value in tickets.iteritems():
-            # I think there's better way
-            if attribute == "id":
-                tickets_found.append(value)
+        tickets_found.append(tickets['id'])
     return tickets_found
 
 def updateCompany (user_email,pswd,ticket_id,temp_requester_id,requester_id,ticket_url,headers):
@@ -53,7 +50,7 @@ def main():
     tickets_url = getTicketsURLEmailCompany(api_url,requester_email,old_company_id)
     print(tickets_url)
 
-    # TODO: change this list to a hash
+    # TODO: change this list to a dictionary
     # TODO: which fields are "required_for_agents": true
     # TODO: type of ticket  'Technical Support,Site Survey,Phone Support,Installation,Sales'
     # TODO: type of group: PilotWare Support = 12000000933, Technical Support = 5000175231, Sales = 5000188665
